@@ -56,7 +56,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int pwm=75;
 /* USER CODE END 0 */
 
 /**
@@ -91,8 +91,17 @@ int main(void)
   MX_CAN1_Init();
   MX_TIM3_Init();
   MX_TIM12_Init();
+  MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
   Motor_init();
+  if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_0)==GPIO_PIN_SET)
+  {
+	  limit=1;
+  }
+  if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_1)==GPIO_PIN_SET)
+  {
+	  limit=-1;
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -100,6 +109,7 @@ int main(void)
 
   while (1)
   {
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -1,6 +1,10 @@
-../Core/Src/tim.c:31:6:MX_TIM3_Init	6
-../Core/Src/tim.c:85:6:MX_TIM12_Init	5
-../Core/Src/tim.c:132:6:HAL_TIM_Base_MspInit	3
-../Core/Src/tim.c:166:6:HAL_TIM_MspPostInit	3
-../Core/Src/tim.c:214:6:HAL_TIM_Base_MspDeInit	3
-../Core/Src/tim.c:248:6:Motor_init	1
+../Core/Src/tim.c:32:6:MX_TIM3_Init	6
+../Core/Src/tim.c:86:6:MX_TIM12_Init	5
+../Core/Src/tim.c:133:6:MX_TIM14_Init	4
+../Core/Src/tim.c:174:6:HAL_TIM_Base_MspInit	4
+../Core/Src/tim.c:223:6:HAL_TIM_MspPostInit	4
+../Core/Src/tim.c:292:6:HAL_TIM_Base_MspDeInit	4
+../Core/Src/tim.c:340:6:Motor_init	1
+../Core/Src/tim.c:357:6:Set_Motor1	3
+../Core/Src/tim.c:379:6:Set_Motor2	3
+../Core/Src/tim.c:401:6:Set_drill	1

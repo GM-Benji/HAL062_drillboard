@@ -20,17 +20,17 @@
 /* Includes ------------------------------------------------------------------*/
 #include "can.h"
 
-
 /* USER CODE BEGIN 0 */
 
 
 CAN_RxHeaderTypeDef   RxHeader;
 uint8_t               RxData[8];
+volatile int speed[2]={0,0};
+volatile int direction[2]={0,75};
 /* USER CODE END 0 */
 
 CAN_HandleTypeDef hcan1;
-volatile int speed[2]={0,0};
-volatile int direction[2]={0,0};
+
 /* CAN1 init function */
 void MX_CAN1_Init(void)
 {
@@ -174,19 +174,16 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     Error_Handler();
   }
 
-  if(RxHeader.StdId== 200)
+  if(RxHeader.StdId== 203)
   {
 	  //opuszczanie wiertła
-
 	  direction[0]=RxData[0];
 	  speed[0]=RxData[1];
-
+  }
+  if(RxHeader.StdId== 204)
+  {
 	  //wiercenie
-	  direction[1]=RxData[2];
-	  speed[1]=RxData[3];
-
-
-
+	  direction[1]=RxData[0]; // od 50 do 100
   }
   HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
 }

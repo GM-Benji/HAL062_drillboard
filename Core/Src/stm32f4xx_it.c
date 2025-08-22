@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include "can.h"
 #include "gpio.h"
+#include "time.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,6 +61,7 @@
 extern CAN_HandleTypeDef hcan1;
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim12;
+extern TIM_HandleTypeDef htim14;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -188,39 +190,19 @@ void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
 	//  opuszczanie wiertła
-	  if(direction[0]==-1 && limit==-1)
+	  if(direction[0]==2 && limit==1)
 	  {
 		  speed[0]=0;
 	  }
-	  if(direction[0]==1 && limit==1)
+	  if(direction[0]==1 && limit==-1)
 	  {
 		  speed[0]=0;
 	  }
-	if(direction[0]==1)
-	{
-	 HAL_GPIO_WritePin(Motor1_IN1_GPIO_Port, Motor1_IN1_Pin,1);
-	 HAL_GPIO_WritePin(Motor1_IN2_GPIO_Port, Motor1_IN2_Pin,0);
-	  __HAL_TIM_SET_COMPARE(&htim12,TIM_CHANNEL_2,speed[0]);
-	}
-	else
-	{
-		 HAL_GPIO_WritePin(Motor1_IN1_GPIO_Port, Motor1_IN1_Pin,0);
-		 HAL_GPIO_WritePin(Motor1_IN2_GPIO_Port, Motor1_IN2_Pin,1);
-		  __HAL_TIM_SET_COMPARE(&htim12,TIM_CHANNEL_2,speed[0]);
-	}
-	  //wiercenie
-	if(direction[1]==1)
-	{
-	 HAL_GPIO_WritePin(Motor2_IN1_GPIO_Port, Motor2_IN1_Pin,1);
-	 HAL_GPIO_WritePin(Motor2_IN2_GPIO_Port, Motor2_IN2_Pin,0);
-	  __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_2,speed[1]);
-	}
-	else
-	{
-		 HAL_GPIO_WritePin(Motor2_IN1_GPIO_Port, Motor2_IN1_Pin,0);
-		 HAL_GPIO_WritePin(Motor2_IN2_GPIO_Port, Motor2_IN2_Pin,1);
-		  __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_2,speed[1]);
-	}
+	  Set_Motor2(direction[0],speed[0]);
+	  Set_drill(direction[1]);
+
+
+
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
@@ -345,6 +327,20 @@ void TIM8_BRK_TIM12_IRQHandler(void)
   /* USER CODE BEGIN TIM8_BRK_TIM12_IRQn 1 */
 
   /* USER CODE END TIM8_BRK_TIM12_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM8 trigger and commutation interrupts and TIM14 global interrupt.
+  */
+void TIM8_TRG_COM_TIM14_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 0 */
+
+  /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim14);
+  /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 1 */
+
+  /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
