@@ -60,6 +60,7 @@
 /* External variables --------------------------------------------------------*/
 extern CAN_HandleTypeDef hcan1;
 extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim7;
 extern TIM_HandleTypeDef htim12;
 extern TIM_HandleTypeDef htim14;
 /* USER CODE BEGIN EV */
@@ -190,7 +191,7 @@ void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
 	//  opuszczanie wiertła
-	  if(direction[0]==2 && limit==1)
+	  /*if(direction[0]==2 && limit==1)
 	  {
 		  speed[0]=0;
 	  }
@@ -209,7 +210,7 @@ void SysTick_Handler(void)
 	  Set_Motor1(direction[0],speed[0]);
 	  Set_Motor2(direction[1],speed[1]);
 	  Set_Motor3(direction[2],speed[2]);
-	  //Set_drill(direction[1]);
+	  //Set_drill(direction[1]);*/
 
 
 
@@ -351,6 +352,39 @@ void TIM8_TRG_COM_TIM14_IRQHandler(void)
   /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 1 */
 
   /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM7 global interrupt.
+  */
+void TIM7_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM7_IRQn 0 */
+	if(direction[0]==2 && limit==1)
+		  {
+			  speed[0]=0;
+		  }
+		  if(direction[0]==1 && limit==-1)
+		  {
+			  speed[0]=0;
+		  }
+		  if(direction[1]==2 && limit2==1)
+		  {
+			  speed[1]=0;
+		  }
+		  if(direction[1]==1 && limit2==-1)
+		  {
+			  speed[1]=0;
+		  }
+		  Set_Motor1(direction[0],speed[0]);
+		  Set_Motor2(direction[1],speed[1]);
+		  Set_Motor3(direction[2],speed[2]);
+		  //Set_drill(direction[1]);
+  /* USER CODE END TIM7_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim7);
+  /* USER CODE BEGIN TIM7_IRQn 1 */
+
+  /* USER CODE END TIM7_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

@@ -178,7 +178,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
   {
 	  //opuszczanie wiertła
 	  direction[0]=RxData[0];
-	  speed[0]=RxData[1];
+	  direction[1]=RxData[1];
+	  direction[2]=RxData[2];
+	  speed[0]=RxData[3];
+	  speed[0]=RxData[4];
+	  speed[0]=RxData[5];
   }
   if(RxHeader.StdId== 204)
   {
