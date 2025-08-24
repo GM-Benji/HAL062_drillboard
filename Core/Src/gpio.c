@@ -22,7 +22,8 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN 0 */
-volatile int limit =0;
+volatile int8_t limit =0;
+volatile int8_t limit2 =0;
 volatile uint32_t lastDebounceTime_Pin0 = 0;
 volatile uint32_t lastDebounceTime_Pin1 = 0;
 const uint32_t debounceDelay = 50; // w ms
@@ -77,16 +78,20 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, LED3_Pin|LED1_Pin|LED2_Pin|Motor2_D1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, LED3_Pin|LED1_Pin|LED2_Pin|Motor2_D1_Pin
+                          |Motor3_D1_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, Motor3_IN2_Pin|Motor3_IN1_Pin|Motor1_IN1_Pin|Motor1_IN2_Pin
+                          |Motor2_IN1_Pin|Motor2_IN2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(Motor1_D1_GPIO_Port, Motor1_D1_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, Motor1_IN1_Pin|Motor1_IN2_Pin|Motor2_IN1_Pin|Motor2_IN2_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pins : LED3_Pin LED1_Pin LED2_Pin Motor2_D1_Pin */
-  GPIO_InitStruct.Pin = LED3_Pin|LED1_Pin|LED2_Pin|Motor2_D1_Pin;
+  /*Configure GPIO pins : LED3_Pin LED1_Pin LED2_Pin Motor2_D1_Pin
+                           Motor3_D1_Pin */
+  GPIO_InitStruct.Pin = LED3_Pin|LED1_Pin|LED2_Pin|Motor2_D1_Pin
+                          |Motor3_D1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -98,19 +103,27 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : krancowka4_Pin krancowka3_Pin */
+  GPIO_InitStruct.Pin = krancowka4_Pin|krancowka3_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : Motor3_IN2_Pin Motor3_IN1_Pin Motor1_IN1_Pin Motor1_IN2_Pin
+                           Motor2_IN1_Pin Motor2_IN2_Pin */
+  GPIO_InitStruct.Pin = Motor3_IN2_Pin|Motor3_IN1_Pin|Motor1_IN1_Pin|Motor1_IN2_Pin
+                          |Motor2_IN1_Pin|Motor2_IN2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /*Configure GPIO pin : Motor1_D1_Pin */
   GPIO_InitStruct.Pin = Motor1_D1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(Motor1_D1_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : Motor1_IN1_Pin Motor1_IN2_Pin Motor2_IN1_Pin Motor2_IN2_Pin */
-  GPIO_InitStruct.Pin = Motor1_IN1_Pin|Motor1_IN2_Pin|Motor2_IN1_Pin|Motor2_IN2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_IRQn, 5, 0);

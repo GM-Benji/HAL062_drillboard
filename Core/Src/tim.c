@@ -76,6 +76,10 @@ void MX_TIM3_Init(void)
   {
     Error_Handler();
   }
+  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN TIM3_Init 2 */
 
   /* USER CODE END TIM3_Init 2 */
@@ -232,13 +236,14 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
     __HAL_RCC_GPIOC_CLK_ENABLE();
     /**TIM3 GPIO Configuration
     PC7     ------> TIM3_CH2
+    PC8     ------> TIM3_CH3
     */
-    GPIO_InitStruct.Pin = Motor2_PWM_Pin;
+    GPIO_InitStruct.Pin = Motor2_PWM_Pin|Motor3_PWM_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF2_TIM3;
-    HAL_GPIO_Init(Motor2_PWM_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM3_MspPostInit 1 */
 
@@ -340,6 +345,7 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 void Motor_init()
 {
 	 HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_2);
+	 HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_3);
 	 HAL_TIM_PWM_Start_IT(&htim12, TIM_CHANNEL_2);
 	 HAL_TIM_PWM_Start_IT(&htim14, TIM_CHANNEL_1);
 	 //inicjalizacja silnika do opuszczania
@@ -352,6 +358,11 @@ void Motor_init()
 	 HAL_GPIO_WritePin(Motor2_IN1_GPIO_Port, Motor2_IN1_Pin,0);
 	 HAL_GPIO_WritePin(Motor2_IN2_GPIO_Port, Motor2_IN2_Pin,0);
 	 __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_2,0);
+	 //inicjalizacja 3 silnika
+	 HAL_GPIO_WritePin(Motor3_D1_GPIO_Port, Motor3_D1_Pin,0);
+	 HAL_GPIO_WritePin(Motor3_IN1_GPIO_Port, Motor3_IN1_Pin,0);
+	 HAL_GPIO_WritePin(Motor3_IN2_GPIO_Port, Motor3_IN2_Pin,0);
+	 __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_3,0);
 
 }
 void Set_Motor1(int direction , int speed)
@@ -395,6 +406,28 @@ void Set_Motor2(int direction , int speed)
 		 HAL_GPIO_WritePin(Motor2_IN1_GPIO_Port, Motor2_IN1_Pin,0);
 		 HAL_GPIO_WritePin(Motor2_IN2_GPIO_Port, Motor2_IN2_Pin,0);
 		 __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_2,0);
+	}
+
+}
+void Set_Motor3(int direction , int speed)
+{
+	if(direction==1)
+	{
+		 HAL_GPIO_WritePin(Motor3_IN1_GPIO_Port, Motor3_IN1_Pin,1);
+		 HAL_GPIO_WritePin(Motor3_IN2_GPIO_Port, Motor3_IN2_Pin,0);
+		 __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_3,speed);
+	}
+	else if(direction==2)
+	{
+		 HAL_GPIO_WritePin(Motor3_IN1_GPIO_Port, Motor3_IN1_Pin,0);
+		 HAL_GPIO_WritePin(Motor3_IN2_GPIO_Port, Motor3_IN2_Pin,1);
+		 __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_3,speed);
+	}
+	else
+	{
+		 HAL_GPIO_WritePin(Motor3_IN1_GPIO_Port, Motor3_IN1_Pin,0);
+		 HAL_GPIO_WritePin(Motor3_IN2_GPIO_Port, Motor3_IN2_Pin,0);
+		 __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_3,0);
 	}
 
 }

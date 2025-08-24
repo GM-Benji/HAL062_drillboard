@@ -94,19 +94,30 @@ int main(void)
   MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
   Motor_init();
-  if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_0)==GPIO_PIN_SET)
+  if(HAL_GPIO_ReadPin(krancowka2_GPIO_Port, krancowka2_Pin)==GPIO_PIN_SET)
   {
 	  limit=1;
   }
-  if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_1)==GPIO_PIN_SET)
+  if(HAL_GPIO_ReadPin(krancowka1_GPIO_Port, krancowka1_Pin)==GPIO_PIN_SET)
   {
 	  limit=-1;
   }
+  if(HAL_GPIO_ReadPin(krancowka4_GPIO_Port, krancowka4_Pin)==GPIO_PIN_SET)
+  {
+  	  limit2=1;
+  }
+  if(HAL_GPIO_ReadPin(krancowka3_GPIO_Port, krancowka3_Pin)==GPIO_PIN_SET)
+  {
+	  limit2= -1;
+  }
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
+  HAL_TIM_Base_Start_IT(&htim3);
+  HAL_TIM_Base_Start_IT(&htim12);
+  HAL_TIM_Base_Start_IT(&htim14);
   while (1)
   {
 

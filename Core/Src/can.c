@@ -25,8 +25,8 @@
 
 CAN_RxHeaderTypeDef   RxHeader;
 uint8_t               RxData[8];
-volatile int speed[2]={0,0};
-volatile int direction[2]={0,75};
+volatile int8_t speed[3]={0,0,0};
+volatile int8_t direction[3]={0,0,0};
 /* USER CODE END 0 */
 
 CAN_HandleTypeDef hcan1;

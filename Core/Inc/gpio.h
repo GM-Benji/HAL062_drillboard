@@ -33,7 +33,8 @@ extern "C" {
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN Private defines */
-extern volatile int limit;
+extern volatile int8_t limit;
+extern volatile int8_t limit2;
 /* USER CODE END Private defines */
 
 void MX_GPIO_Init(void);

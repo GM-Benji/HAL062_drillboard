@@ -43,8 +43,8 @@ void MX_CAN1_Init(void);
 /* USER CODE BEGIN Prototypes */
 extern CAN_RxHeaderTypeDef   RxHeader;
 extern uint8_t               RxData[8];
-extern volatile int speed[2];
-extern volatile int direction[2];
+extern volatile int8_t speed[3];
+extern volatile int8_t direction[3];
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

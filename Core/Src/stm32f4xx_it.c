@@ -198,8 +198,18 @@ void SysTick_Handler(void)
 	  {
 		  speed[0]=0;
 	  }
+	  if(direction[1]==2 && limit2==1)
+	  {
+		  speed[1]=0;
+	  }
+	  if(direction[1]==1 && limit2==-1)
+	  {
+		  speed[1]=0;
+	  }
+	  Set_Motor1(direction[0],speed[0]);
 	  Set_Motor2(direction[0],speed[0]);
-	  Set_drill(direction[1]);
+	  Set_Motor3(direction[0],speed[0]);
+	  //Set_drill(direction[1]);
 
 
 
