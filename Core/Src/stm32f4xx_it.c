@@ -207,8 +207,8 @@ void SysTick_Handler(void)
 		  speed[1]=0;
 	  }
 	  Set_Motor1(direction[0],speed[0]);
-	  Set_Motor2(direction[0],speed[0]);
-	  Set_Motor3(direction[0],speed[0]);
+	  Set_Motor2(direction[1],speed[1]);
+	  Set_Motor3(direction[2],speed[2]);
 	  //Set_drill(direction[1]);
 
 

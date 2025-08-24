@@ -62,6 +62,30 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
                 limit = 0;
         }
     }
+    else if (GPIO_Pin == GPIO_PIN_3)
+        {
+            if ((currentTime - lastDebounceTime_Pin1) > debounceDelay)
+            {
+                lastDebounceTime_Pin1 = currentTime;
+
+                if (limit2 == 0)
+                    limit2 = -1;
+                else
+                    limit2 = 0;
+            }
+        }
+    else if (GPIO_Pin == GPIO_PIN_4)
+        {
+            if ((currentTime - lastDebounceTime_Pin1) > debounceDelay)
+            {
+                lastDebounceTime_Pin1 = currentTime;
+
+                if (limit2 == 0)
+                    limit2 = 1;
+                else
+                    limit2 = 0;
+            }
+        }
 }
 /* USER CODE END 1 */
 
