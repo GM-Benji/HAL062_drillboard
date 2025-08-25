@@ -55,6 +55,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 void Motor_init();
 void Set_Motor1(int direction , int speed);
 void Set_Motor2(int direction , int speed);
+void Set_Motor3(int direction , int speed);
 void Set_drill(int speed);
 /* USER CODE END Prototypes */
 

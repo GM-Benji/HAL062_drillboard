@@ -181,8 +181,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	  direction[1]=RxData[1];
 	  direction[2]=RxData[2];
 	  speed[0]=RxData[3];
-	  speed[0]=RxData[4];
-	  speed[0]=RxData[5];
+	  speed[1]=RxData[4];
+	  speed[2]=RxData[5];
   }
 
   HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
