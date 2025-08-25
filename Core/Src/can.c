@@ -184,11 +184,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	  speed[0]=RxData[4];
 	  speed[0]=RxData[5];
   }
-  if(RxHeader.StdId== 204)
-  {
-	  //wiercenie
-	  direction[1]=RxData[0]; // od 50 do 100
-  }
+
   HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
 }
 /* USER CODE END 1 */

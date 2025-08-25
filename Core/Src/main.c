@@ -118,7 +118,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   HAL_TIM_Base_Start_IT(&htim3);
   HAL_TIM_Base_Start_IT(&htim12);
-  HAL_TIM_Base_Start_IT(&htim14);
+  HAL_TIM_Base_Start_IT(&htim7);
   while (1)
   {
 

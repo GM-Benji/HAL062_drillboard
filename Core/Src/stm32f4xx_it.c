@@ -318,7 +318,8 @@ void CAN1_SCE_IRQHandler(void)
 void TIM3_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM3_IRQn 0 */
-
+	int temp=0;
+	temp++;
   /* USER CODE END TIM3_IRQn 0 */
   HAL_TIM_IRQHandler(&htim3);
   /* USER CODE BEGIN TIM3_IRQn 1 */
@@ -360,6 +361,7 @@ void TIM8_TRG_COM_TIM14_IRQHandler(void)
 void TIM7_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM7_IRQn 0 */
+
 	if(direction[0]==2 && limit==1)
 		  {
 			  speed[0]=0;
