@@ -258,34 +258,6 @@ void EXTI1_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles EXTI line 2 interrupt.
-  */
-void EXTI2_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI2_IRQn 0 */
-
-  /* USER CODE END EXTI2_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(krancowka4_Pin);
-  /* USER CODE BEGIN EXTI2_IRQn 1 */
-
-  /* USER CODE END EXTI2_IRQn 1 */
-}
-
-/**
-  * @brief This function handles EXTI line 3 interrupt.
-  */
-void EXTI3_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI3_IRQn 0 */
-
-  /* USER CODE END EXTI3_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(krancowka3_Pin);
-  /* USER CODE BEGIN EXTI3_IRQn 1 */
-
-  /* USER CODE END EXTI3_IRQn 1 */
-}
-
-/**
   * @brief This function handles CAN1 TX interrupt.
   */
 void CAN1_TX_IRQHandler(void)
@@ -390,23 +362,23 @@ void TIM8_TRG_COM_TIM14_IRQHandler(void)
 void TIM7_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM7_IRQn 0 */
+	if(HAL_GPIO_ReadPin(krancowka1_GPIO_Port, krancowka1_Pin) == GPIO_PIN_SET && direction[0] == 2)
+	{
+		speed[0] = 0;
+	}
+	if(HAL_GPIO_ReadPin(krancowka2_GPIO_Port, krancowka2_Pin) == GPIO_PIN_SET && direction[0] == 1)
+	{
+		speed[0] = 0;
+	}
+	if(HAL_GPIO_ReadPin(krancowka3_GPIO_Port, krancowka3_Pin) == GPIO_PIN_SET && direction[1] == 2)
+	{
+		speed[1] = 0;
+	}
+	if(HAL_GPIO_ReadPin(krancowka4_GPIO_Port, krancowka4_Pin) == GPIO_PIN_SET && direction[1] == 1)
+	{
+		speed[1] = 0;
+	}
 
-	if(direction[0]==2 && limit==1)
-		  {
-			  speed[0]=0;
-		  }
-		  if(direction[0]==1 && limit==-1)
-		  {
-			  speed[0]=0;
-		  }
-		  if(direction[1]==2 && limit2==1)
-		  {
-			  speed[1]=0;
-		  }
-		  if(direction[1]==1 && limit2==-1)
-		  {
-			  speed[1]=0;
-		  }
 		  Set_Motor1(direction[0],speed[0]);
 		  Set_Motor2(direction[1],speed[1]);
 		  Set_Motor3(direction[2],speed[2]);

@@ -71,10 +71,8 @@ void Error_Handler(void);
 #define krancowka1_EXTI_IRQn EXTI1_IRQn
 #define krancowka4_Pin GPIO_PIN_2
 #define krancowka4_GPIO_Port GPIOC
-#define krancowka4_EXTI_IRQn EXTI2_IRQn
 #define krancowka3_Pin GPIO_PIN_3
 #define krancowka3_GPIO_Port GPIOC
-#define krancowka3_EXTI_IRQn EXTI3_IRQn
 #define Motor3_IN2_Pin GPIO_PIN_0
 #define Motor3_IN2_GPIO_Port GPIOA
 #define Motor3_IN1_Pin GPIO_PIN_1

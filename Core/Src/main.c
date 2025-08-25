@@ -95,7 +95,7 @@ int main(void)
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
   Motor_init();
-  if(HAL_GPIO_ReadPin(krancowka2_GPIO_Port, krancowka2_Pin)==GPIO_PIN_SET)
+/*  if(HAL_GPIO_ReadPin(krancowka2_GPIO_Port, krancowka2_Pin)==GPIO_PIN_SET)
   {
 	  limit=1;
   }
@@ -110,7 +110,7 @@ int main(void)
   if(HAL_GPIO_ReadPin(krancowka3_GPIO_Port, krancowka3_Pin)==GPIO_PIN_SET)
   {
 	  limit2= -1;
-  }
+  }*/
 
   /* USER CODE END 2 */
 
