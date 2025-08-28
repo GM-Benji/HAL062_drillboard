@@ -62,9 +62,9 @@ void MX_CAN1_Init(void)
   CAN_FilterTypeDef sFilterConfig;
 
     sFilterConfig.FilterBank = 0;
-    sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
+    sFilterConfig.FilterMode = CAN_FILTERMODE_IDLIST;
     sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-    sFilterConfig.FilterIdHigh = 0x0000;
+    sFilterConfig.FilterIdHigh = 203<<5;
     sFilterConfig.FilterIdLow = 0x0000;
     sFilterConfig.FilterMaskIdHigh = 0x0000;
     sFilterConfig.FilterMaskIdLow = 0x0000;
@@ -186,5 +186,21 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
   }
 
   HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+}
+void CAN_SendMessage(uint32_t id, uint8_t *data)
+{
+    CAN_TxHeaderTypeDef TxHeader;
+    uint32_t TxMailbox;
+
+    TxHeader.DLC = 8;                      // zawsze 8 bajtów
+    TxHeader.IDE = CAN_ID_STD;             // standardowe ID (11 bitów)
+    TxHeader.StdId = id & 0x7FF;           // maskujemy do 11 bitów
+    TxHeader.RTR = CAN_RTR_DATA;           // ramka danych
+    TxHeader.TransmitGlobalTime = DISABLE;
+    if(HAL_CAN_AddTxMessage(&hcan1, &TxHeader, data, &TxMailbox) != HAL_OK)
+    {
+    	Error_Handler();
+    }
+
 }
 /* USER CODE END 1 */

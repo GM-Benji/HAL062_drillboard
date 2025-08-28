@@ -55,12 +55,14 @@
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+uint8_t canFlag = 0; //0 - switch not on, 1 - switch on
+uint8_t temp_Flag = 0;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
 extern CAN_HandleTypeDef hcan1;
 extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim6;
 extern TIM_HandleTypeDef htim7;
 extern TIM_HandleTypeDef htim12;
 extern TIM_HandleTypeDef htim14;
@@ -319,8 +321,7 @@ void CAN1_SCE_IRQHandler(void)
 void TIM3_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM3_IRQn 0 */
-	int temp=0;
-	temp++;
+
   /* USER CODE END TIM3_IRQn 0 */
   HAL_TIM_IRQHandler(&htim3);
   /* USER CODE BEGIN TIM3_IRQn 1 */
@@ -357,26 +358,81 @@ void TIM8_TRG_COM_TIM14_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles TIM6 global interrupt and DAC1, DAC2 underrun error interrupts.
+  */
+void TIM6_DAC_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
+		if(canFlag == 1)
+		{
+			temp_Flag = 1;
+		}
+
+  /* USER CODE END TIM6_DAC_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim6);
+  /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
+
+  /* USER CODE END TIM6_DAC_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM7 global interrupt.
   */
 void TIM7_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM7_IRQn 0 */
+	uint8_t dataRx[8] = {0,0,0,0,0,0,0,0};
+	uint32_t id = 204;
+	canFlag =0;
+
 	if(HAL_GPIO_ReadPin(krancowka1_GPIO_Port, krancowka1_Pin) == GPIO_PIN_SET && direction[0] == 2)
 	{
 		speed[0] = 0;
+		dataRx[0] = 1; //motor1 zatrzymany
+		//CAN_SendMessage(id, dataRx);
+		canFlag = 1;
+		if(temp_Flag)
+		{
+			CAN_SendMessage(id, dataRx);
+		}
+		temp_Flag =0;
 	}
 	if(HAL_GPIO_ReadPin(krancowka2_GPIO_Port, krancowka2_Pin) == GPIO_PIN_SET && direction[0] == 1)
 	{
 		speed[0] = 0;
+		dataRx[0] = 1; //motor1 zatrzymany
+		//CAN_SendMessage(id, dataRx);
+		canFlag = 1;
+		if(temp_Flag)
+		{
+			CAN_SendMessage(id, dataRx);
+		}
+		temp_Flag =0;
 	}
 	if(HAL_GPIO_ReadPin(krancowka3_GPIO_Port, krancowka3_Pin) == GPIO_PIN_SET && direction[1] == 2)
 	{
 		speed[1] = 0;
+		dataRx[0] = 2; //motor2 zatrzymany
+		//CAN_SendMessage(id, dataRx);
+		canFlag = 1;
+		if(temp_Flag)
+		{
+			CAN_SendMessage(id, dataRx);
+		}
+		temp_Flag =0;
+
 	}
 	if(HAL_GPIO_ReadPin(krancowka4_GPIO_Port, krancowka4_Pin) == GPIO_PIN_SET && direction[1] == 1)
 	{
 		speed[1] = 0;
+		dataRx[0] = 2; //motor2 zatrzymany
+		//CAN_SendMessage(id, dataRx);
+		canFlag = 1;
+		if(temp_Flag)
+		{
+			CAN_SendMessage(id, dataRx);
+		}
+		temp_Flag =0;
 	}
 
 		  Set_Motor1(direction[0],speed[0]);

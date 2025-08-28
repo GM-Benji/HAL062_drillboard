@@ -93,6 +93,7 @@ int main(void)
   MX_TIM12_Init();
   MX_TIM14_Init();
   MX_TIM7_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
   Motor_init();
 /*  if(HAL_GPIO_ReadPin(krancowka2_GPIO_Port, krancowka2_Pin)==GPIO_PIN_SET)
@@ -119,6 +120,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim3);
   HAL_TIM_Base_Start_IT(&htim12);
   HAL_TIM_Base_Start_IT(&htim7);
+  HAL_TIM_Base_Start_IT(&htim6);
   while (1)
   {
 
